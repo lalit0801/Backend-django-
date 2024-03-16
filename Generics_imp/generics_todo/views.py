@@ -1,7 +1,13 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import Task
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, NameSerializer
+from  rest_framework.views import APIView
+
+
+class testView(APIView):
+    def get(self, request):
+        name
 
 class TaskCreateAPIView(generics.CreateAPIView):
     # queryset = Task.objects.all()

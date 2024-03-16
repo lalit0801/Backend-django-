@@ -21,3 +21,15 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 
 
 product_detail_view= ProductDetailAPIView.as_view()
+
+
+# @api_view(['GET','POST']):
+# def test_method(request):
+#     if request.method== GET:
+#         car= Carlist.objects.all()
+#         serializer= serializer(car,many=True)
+#         return Response()
+#     if request.method=='POST':
+#         serializer= Carserializer(data= request.data)
+#         if serializer.is_valid():
+#             serial

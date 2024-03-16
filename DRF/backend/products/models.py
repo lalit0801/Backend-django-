@@ -1,6 +1,13 @@
 from django.db import models
 
 # Create your models here.
+class test_model(models.Model):
+    name= models.CharField(max_length= 30)
+    location= models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     # primarykey : pk=integer
     title=models.CharField(max_length=100)
