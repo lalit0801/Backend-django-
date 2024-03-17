@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Task_owner_name(models.Model):
     name= models.CharField(max_length=20,unique=True)
-    age= models.IntegerField(max_length=100)
+    age= models.IntegerField()
 
     def __str__(self):
         return self.name

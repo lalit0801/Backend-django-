@@ -1,18 +1,37 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import Task
+from .models import Task, Task_owner_name 
 from .serializers import TaskSerializer, NameSerializer
 from  rest_framework.views import APIView
-
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from .permission import OurAuthenticationPermissions
 
 class testView(APIView):
     def get(self, request):
-        name
+        details= Task_owner_name.objects.all()
+        serializer = NameSerializer(details, many= True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = NameSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else :
+            return Response(serializer.errors)
+
+class testdetail(APIView):
+
+    def get(self, request, pk):
+        details= Task_owner_name.objects.get(pk=pk)
+        serializer= NameSerializer(details)
+        return Response(serializer.data)
+
 
 class TaskCreateAPIView(generics.CreateAPIView):
     # queryset = Task.objects.all()
     serializer_class = TaskSerializer
-
+    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly]
     
     # 
     # fun():
@@ -34,7 +53,8 @@ class TaskCreateAPIView(generics.CreateAPIView):
 class TaskViewAllAPIView(generics.ListAPIView):
     # queryset = Task.objects.filter().first()
     serializer_class = TaskSerializer
-
+    permission_classes = [OurAuthenticationPermissions]
+    
     def get_queryset(self):
         des = self.kwargs['des']
         return Task.objects.filter(description = des)
@@ -53,7 +73,7 @@ class TaskViewAllAPIView(generics.ListAPIView):
 # task_detail_view= TaskDetailAPIView.as_view()
 
 
-class TaskUpdateAPIView(generics.UpdateAPIView):
+class TaskUpdateAPIView(generics.UpdateAPIView, ):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
