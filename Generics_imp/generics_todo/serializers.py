@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 # Create your models here.
 class TaskSerializer(serializers.ModelSerializer):
+    # dicounted_price= serializers.SerializerMethodField()
     class Meta:
         model= Task
         fields= [
@@ -10,6 +11,8 @@ class TaskSerializer(serializers.ModelSerializer):
             'description',
             'status'
         ]
+    
+    
 
 
 class NameSerializer(serializers.ModelSerializer):

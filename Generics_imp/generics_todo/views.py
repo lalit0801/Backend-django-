@@ -5,6 +5,8 @@ from .serializers import TaskSerializer, NameSerializer
 from  rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .permission import OurAuthenticationPermissions
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 class testView(APIView):
     def get(self, request):
@@ -32,6 +34,7 @@ class TaskCreateAPIView(generics.CreateAPIView):
     # queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly]
+    authentication_classes= [SessionAuthentication]
     
     # 
     # fun():
