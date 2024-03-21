@@ -5,8 +5,30 @@ from .serializers import TaskSerializer, NameSerializer
 from  rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .permission import OurAuthenticationPermissions
-from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+
+# class list_viewset(viewsets.ViewSet):
+#     permission_classes = [IsAuthenticatedOrReadOnly]
+#     authentication_classes= [SessionAuthentication]
+#     def list(self, request):
+#         queryset= Task.objects.all()
+#         serializer = TaskSerializer(queryset, many=True)
+#         return Response(serializer.data)
+    
+#     def retrieve(self, request, pk=None):
+#         queryset= Task.objects.all()
+#         task= get_object_or_404(queryset,pk=pk)
+#         serializer = TaskSerializer(task)
+#         return Response(serializer.data)
+    
+class list_viewset(viewsets.ModelViewSet):
+    queryset= Task.objects.all()
+    serializer_class= TaskSerializer
+    permission_classes= [IsAuthenticated]
+    authentication_classes= [TokenAuthentication]
 
 class testView(APIView):
     def get(self, request):
@@ -33,8 +55,8 @@ class testdetail(APIView):
 class TaskCreateAPIView(generics.CreateAPIView):
     # queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly]
-    authentication_classes= [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    authentication_classes= [TokenAuthentication]
     
     # 
     # fun():
@@ -56,7 +78,7 @@ class TaskCreateAPIView(generics.CreateAPIView):
 class TaskViewAllAPIView(generics.ListAPIView):
     # queryset = Task.objects.filter().first()
     serializer_class = TaskSerializer
-    permission_classes = [OurAuthenticationPermissions]
+    permission_classes = [IsAuthenticated, OurAuthenticationPermissions]
     
     def get_queryset(self):
         des = self.kwargs['des']

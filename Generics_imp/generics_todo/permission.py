@@ -15,7 +15,12 @@ class OurAuthenticationPermissions(permissions.DjangoModelPermissions) :
         'DELETE': ['%(app_label)s.delete_%(model_name)s'],
     }
 
-    def has_permission(self, request, view):
-        print("our permissions")
-        return super().has_permission(request, view)
-    
+    def has_permission(self, request, view): 
+        user = request.user
+
+        if user.username == 'lalit':
+            return True
+        
+        else:
+            return False
+

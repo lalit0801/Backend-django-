@@ -4,13 +4,10 @@ from rest_framework import serializers
 # Create your models here.
 class TaskSerializer(serializers.ModelSerializer):
     # dicounted_price= serializers.SerializerMethodField()
+    apiuser= serializers.StringRelatedField(read_only=True)
     class Meta:
         model= Task
-        fields= [
-            'title',
-            'description',
-            'status'
-        ]
+        fields='__all__'
     
     
 
