@@ -9,6 +9,7 @@ from rest_framework.authentication import BasicAuthentication, SessionAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # class list_viewset(viewsets.ViewSet):
 #     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -28,7 +29,7 @@ class list_viewset(viewsets.ModelViewSet):
     queryset= Task.objects.all()
     serializer_class= TaskSerializer
     permission_classes= [IsAuthenticated]
-    authentication_classes= [TokenAuthentication]
+    authentication_classes= [JWTAuthentication]
 
 class testView(APIView):
     def get(self, request):
