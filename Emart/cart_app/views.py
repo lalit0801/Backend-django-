@@ -17,9 +17,9 @@ class CartItemViewList(generics.ListCreateAPIView):
         serializer.save(user= self.request.user)
 
 
-# class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset= CartItem.objects.all()
-#     serializer_class= CartItemSerializer
-#     permission_classes= [IsAuthenticated, IsOwnerOrAdmin]
-#     authentication_classes= [TokenAuthentication]
+class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= CartItem.objects.all()
+    serializer_class= CartItemSerializer
+    permission_classes= [IsAuthenticated, IsOwnerOrAdmin]
+    authentication_classes= [TokenAuthentication]
     
