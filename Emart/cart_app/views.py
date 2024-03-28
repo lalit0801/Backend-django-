@@ -7,14 +7,14 @@ from rest_framework.authentication import TokenAuthentication
 from .permissions import IsOwnerOrAdmin
 
 
-class CartItemViewList(generics.ListCreateAPIView):
-    queryset= CartItem.objects.all()
-    serializer_class= CartItemSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes= [TokenAuthentication]
+# class CartItemViewList(generics.ListCreateAPIView):
+#     queryset= CartItem.objects.all()
+#     serializer_class= CartItemSerializer
+#     permission_classes = [IsAuthenticated]
+#     authentication_classes= [TokenAuthentication]
 
-    def perform_create(self, serializer):
-        serializer.save(user= self.request.user)
+#     def perform_create(self, serializer):
+#         serializer.save(user= self.request.user)
 
 
 class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
