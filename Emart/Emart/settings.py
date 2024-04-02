@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'Emart.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'emart2',
+        'NAME': 'emart',
         'USER': 'postgres',
         'PASSWORD': 'Lalit@081201',
         'HOST': 'localhost',

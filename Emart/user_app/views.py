@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import generics
 from .models import CustomUser
 from .utils import create_token, delete_token
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LoginSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
@@ -17,28 +17,35 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class= LoginSerializer
+    
     
     def post(self, request):
         try:
-            serializer = self.serializer_class(data = request.data)
-            serializer.is_valid(raise_exception = True)
-            email= serializer.validated_data.get('email')
-            username = request.data.get('username')
+            print(request.data)
+            
+            
+            email = request.data.get('email')
             password = request.data.get('password')
-
-            if CustomUser.objects.filter(email= email).exists():
-             user = CustomUser.objects.get(email=email)
-             print(username)
-             print(password)
-             if user.check_password(password):
-                 print('2')
-                 token, created = Token.objects.get_or_create(user=user)
-                 return Response({'status': True, 'token': token.key}, status=200)
-                 print('3')
-            else:
-                return Response({'status': False, 'message': 'Invalid credentials'}, status=400)
+            print('0')
+            if not CustomUser.objects.filter(email=email).exists():
+             return Response({ 'message': 'email not found'}, status=400)
         
+            
+
+            user = CustomUser.objects.get(email=email)
+            print(user)
+            print(password)
+            if  user.password!=password:
+              return Response({ 'message': 'Incorrect password'}, status=400)
+        
+            print('2')
+            
+            token, created = Token.objects.get_or_create(user=user)
+            print('3')
+            return Response({'status': True, 'token': token.key}, status=200)
+            
+                
 
         except CustomUser.DoesNotExist:
             return Response({'status': False, 'message': 'User not found'}, status=400)
